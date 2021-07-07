@@ -1,7 +1,5 @@
 package com.getcapacitor.community.firebaserc;
-
 import static com.getcapacitor.community.firebaserc.Constant.ERROR_MISSING_KEY;
-
 import android.Manifest;
 import android.content.Context;
 import androidx.annotation.NonNull;
@@ -17,26 +15,19 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigValue;
 import java.util.Collections;
 import java.util.Objects;
-
-@CapacitorPlugin(
+@NativePlugin(
   permissions = {
-    @Permission(strings = { Manifest.permission.ACCESS_NETWORK_STATE }, alias = "access_network_state"),
-    @Permission(strings = { Manifest.permission.INTERNET }, alias = "internet")
-    })
+    Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.INTERNET,
+  }
 )
 public class FirebaseRemoteConfig extends Plugin {
-
   public static final String TAG = "FirebaseRemoteConfig";
-
   private com.google.firebase.remoteconfig.FirebaseRemoteConfig mFirebaseRemoteConfig;
-
   @Override
   public void load() {
     super.load();
-
     this.mFirebaseRemoteConfig =
       com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance();
-
     String fileName = bridge
       .getActivity()
       .getPreferences(Context.MODE_PRIVATE)
@@ -53,7 +44,6 @@ public class FirebaseRemoteConfig extends Plugin {
       this.mFirebaseRemoteConfig.setDefaultsAsync(resourceId);
     }
   }
-
   @PluginMethod
   public void initialize(PluginCall call) {
     int minFetchTimeInSecs = call.getInt("minimumFetchIntervalInSeconds", 3600);
@@ -61,10 +51,8 @@ public class FirebaseRemoteConfig extends Plugin {
       .setMinimumFetchIntervalInSeconds(minFetchTimeInSecs)
       .build();
     this.mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-
     call.success();
   }
-
   @PluginMethod
   public void fetch(final PluginCall call) {
     this.mFirebaseRemoteConfig.fetch()
@@ -88,7 +76,6 @@ public class FirebaseRemoteConfig extends Plugin {
         }
       );
   }
-
   @PluginMethod
   public void activate(final PluginCall call) {
     this.mFirebaseRemoteConfig.activate()
@@ -112,7 +99,6 @@ public class FirebaseRemoteConfig extends Plugin {
         }
       );
   }
-
   @PluginMethod
   public void fetchAndActivate(final PluginCall call) {
     this.mFirebaseRemoteConfig.fetchAndActivate()
@@ -144,7 +130,6 @@ public class FirebaseRemoteConfig extends Plugin {
         }
       );
   }
-
   @PluginMethod
   public void getBoolean(PluginCall call) {
     if (call.hasOption("key")) {
@@ -158,7 +143,6 @@ public class FirebaseRemoteConfig extends Plugin {
       call.error(ERROR_MISSING_KEY);
     }
   }
-
   @PluginMethod
   public void getByteArray(PluginCall call) {
     if (call.hasOption("key")) {
@@ -172,7 +156,6 @@ public class FirebaseRemoteConfig extends Plugin {
       call.error(ERROR_MISSING_KEY);
     }
   }
-
   @PluginMethod
   public void getNumber(PluginCall call) {
     if (call.hasOption("key")) {
@@ -186,7 +169,6 @@ public class FirebaseRemoteConfig extends Plugin {
       call.error(ERROR_MISSING_KEY);
     }
   }
-
   @PluginMethod
   public void getString(PluginCall call) {
     if (call.hasOption("key")) {
@@ -200,7 +182,6 @@ public class FirebaseRemoteConfig extends Plugin {
       call.error(ERROR_MISSING_KEY);
     }
   }
-
   private FirebaseRemoteConfigValue getFirebaseRCValue(String key) {
     return this.mFirebaseRemoteConfig.getValue(key);
   }
