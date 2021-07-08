@@ -1,6 +1,6 @@
 {
   "name": "@dghathway/firebase-remote-config",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A native plugin for firebase remote config",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -36,7 +36,8 @@
     "dist/",
     "ios/",
     "android/",
-    "CapacitorCommunityFirebaseRemoteConfig.podspec"
+    "CapacitorCommunityFirebaseRemoteConfig.podspec",
+    "DghathwayFirebaseRemoteConfig.podspec"
   ],
   "keywords": [
     "capacitor",
